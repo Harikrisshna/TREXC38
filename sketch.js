@@ -12,7 +12,7 @@ var score=0;
 
 var gameOver, restart;
 
-
+var bg,bg1;
 
 function preload(){
   trex_running =   loadAnimation("trex1.png","trex3.png","trex4.png");
@@ -31,6 +31,8 @@ function preload(){
   
   gameOverImg = loadImage("gameOver.png");
   restartImg = loadImage("restart.png");
+  bg1 = loadImage("getsome.jpg")
+
 }
 
 function setup() {
@@ -49,13 +51,12 @@ function setup() {
   
   gameOver = createSprite(700,100);
   gameOver.addImage(gameOverImg);
-  
   restart = createSprite(700,140);
   restart.addImage(restartImg);
   
   gameOver.scale = 0.5;
   restart.scale = 0.5;
-
+   
   gameOver.visible = false;
   restart.visible = false;
   
@@ -70,9 +71,10 @@ function setup() {
 
 function draw() {
   //trex.debug = true;
-  background(255);
-  textSize(15);
-  
+   background("#F78D37")
+  image(bg1,-displayWidth,-500,displayWidth*2,displayHeight*1)
+  stroke(10)
+  textSize(20);
   text("Score: "+ score, 1200,50);
   
   camera.y = trex.y
@@ -92,7 +94,7 @@ function draw() {
     }
   
     trex.collide(invisibleGround);
-    spawnClouds();
+    //spawnClouds();
     spawnObstacles();
   
     if(obstaclesGroup.isTouching(trex)){
@@ -107,7 +109,7 @@ function draw() {
     ground.velocityX = 0;
     trex.velocityY = 0;
     obstaclesGroup.setVelocityXEach(0);
-    cloudsGroup.setVelocityXEach(0);
+    // cloudsGroup.setVelocityXEach(0);
     
     //change the trex animation
     trex.changeAnimation("collided",trex_collided);
@@ -125,27 +127,27 @@ function draw() {
   drawSprites();
 }
 
-function spawnClouds() {
-  //write code here to spawn the clouds
-  if (frameCount % 60 === 0) {
-    var cloud = createSprite(1400,120,40,10);
-    cloud.y = Math.round(random(80,10));
-    cloud.addImage(cloudImage);
-    cloud.scale = 0.5;
-    cloud.velocityX = -3;
+// function spawnClouds() {
+//   //write code here to spawn the clouds
+//   if (frameCount % 60 === 0) {
+//     var cloud = createSprite(1400,120,40,10);
+//     cloud.y = Math.round(random(80,10));
+//     cloud.addImage(bg);
+//     cloud.scale = 0.5;
+//     cloud.velocityX = -3;
     
-     //assign lifetime to the variable
-    cloud.lifetime = 200;
+//      //assign lifetime to the variable
+//     cloud.lifetime = 200;
     
-    //adjust the depth
-    cloud.depth = trex.depth;
-    trex.depth = trex.depth + 1;
+//     //adjust the depth
+//     cloud.depth = trex.depth;
+//     trex.depth = trex.depth + 1;
     
-    //add each cloud to the group
-    cloudsGroup.add(cloud);
-  }
+//     //add each cloud to the group
+//     cloudsGroup.add(cloud);
+//   }
   
-}
+  //}
 
 function spawnObstacles() {
   if(frameCount % 60 === 0) {
